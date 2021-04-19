@@ -20,6 +20,8 @@ class Layout4x4 extends StatelessWidget {
                 title: Text('Color Detecting Game',style: TextStyle(fontSize: 20.0, fontFamily: 'Primetime',color:Colors.white),),
                 centerTitle: true,
                 backgroundColor: Colors.lightBlueAccent[200],
+                automaticallyImplyLeading: false,
+
               ),
           Row(
             children: <Widget> [
@@ -524,53 +526,25 @@ class Layout4x4 extends StatelessWidget {
             child:Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
-              /*children: <Widget>[
-                Container(
-                  child:Column(
-                    children: [
-                      Container(
-                        height:40,width: 80,
-                        color:Colors.grey[200],
-                        child:Icon(Icons.phone),
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.fromLTRB(0.0,0.0,0.0,0.0),
-                        padding: EdgeInsets.all(3.0),
-                      ),
-                    
-                    ],
+              children: [
+                ElevatedButton(
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24.0),
+                        side: BorderSide(color: Colors.blue[500])
+                      )
+                    )
                   ),
-                ),
-                Container(
-                  child:Column(
-                    children: [
-                      Container(
-                        height:40,width: 80,
-                        color:Colors.grey[200],
-                        child:Icon(Icons.near_me_outlined),
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.fromLTRB(0.0,0.0,0.0,0.0),
-                        padding: EdgeInsets.all(3.0),
-                      ),
-                    
-                    ],
+                  child: Text(
+                    'Second Page',
+                    style: TextStyle(color: Colors.white),
                   ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
-                Container(
-                  child:Column(
-                    children: [
-                      Container(
-                        height:40,width: 80,
-                        color:Colors.grey[200],
-                        child:Icon(Icons.share),
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.fromLTRB(0.0,0.0,0.0,0.0),
-                        padding: EdgeInsets.all(3.0),
-                      ),
-                                            
-                    ],
-                  ),
-                ),
-              ],*/
+              ],
             ),
             
           ),

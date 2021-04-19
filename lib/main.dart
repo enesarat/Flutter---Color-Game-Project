@@ -40,13 +40,18 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Row(
                 children: <Widget>[
                   Expanded(
-                    child: Text(
-                      'Color Detecting Game',textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 40.0,
-                          fontFamily: 'Primetime',
-                          color: Colors.lightBlue,
-                          ),
+                    child: Container(
+                      margin: EdgeInsets.fromLTRB(0.0, 120.0, 0.0, 0.0),
+                      //padding: EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 3.0),
+                 
+                      child: Text(
+                        'Color Detecting Game',textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 40.0,
+                            fontFamily: 'Primetime',
+                            color: Colors.blue,
+                            ),
+                      ),
                     ),
                     
                   ),
@@ -58,8 +63,8 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Center(
                 child: Container(
                   height: 80,
-                  width: 300,
-                  margin: EdgeInsets.fromLTRB(0.0,0.0,0.0,150.0),
+                  width: 350,
+                  margin: EdgeInsets.fromLTRB(0.0,0.0,0.0,120.0),
 
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -68,6 +73,14 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: Container(
                           margin: EdgeInsets.all(12.0),
                           child: ElevatedButton(
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(24.0),
+                                  side: BorderSide(color: Colors.blue[500])
+                                )
+                              )
+                            ),
                             onPressed: () {
                               Navigator.push(
                                 context,
@@ -91,6 +104,14 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: Container(
                           margin: EdgeInsets.all(12.0),
                           child: ElevatedButton(
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(24.0),
+                                  side: BorderSide(color: Colors.blue[500])
+                                )
+                              )
+                            ),
                             onPressed: () {
                               Navigator.push(
                                 context,
@@ -114,6 +135,14 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: Container(
                           margin: EdgeInsets.all(12.0),
                           child: ElevatedButton(
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(24.0),
+                                  side: BorderSide(color: Colors.blue[500])
+                                )
+                              )
+                            ),
                             onPressed: () {
                               Navigator.push(
                                 context,
