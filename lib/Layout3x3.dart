@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'FinalScore.dart';
+
 import 'dart:math';
 
 class Layout3x3 extends StatefulWidget {
@@ -9,50 +12,41 @@ class Layout3x3 extends StatefulWidget {
 class _Layout3x3State extends State<Layout3x3> {
   List myColors = [Colors.lightGreen,Colors.cyan,Colors.red,Colors.orange,Colors.pink,Colors.purple,Colors.teal,Colors.brown,Colors.yellow];
   Random randColor =new Random();
-  Random randIdx =new Random();
-
+  Timer time;
+  //Random randIdx =new Random();
+  int score=0;
+  int check_error=0;
   int colorId = 0;
-  int c1=0,c2=1,c3=2,c4=3,c5=4,c6=5,c7=6,c8=7,c9=8;
-  List c_arr = [1,2,3,4,5,6,7,8,9];
-  int randC;
-  List randNumbers = [1,2,3,4,5,6,7,8,9];
-  
-  
-  void suffleNumber(){
-    int index=0;
-    while(index<10){
-      int number = randIdx.nextInt(9);
-      if(randNumbers.contains(number))
-        continue;
-      else
-        randNumbers[index]=number;
-      index++;
+  int second=60;
+  Color c1,c2,c3,c4,c5,c6,c7,c8,c9;
+
+  void timeStarter() {
+    if (time != null) {
+      time.cancel();
     }
-  }/*
-  List shuffle(List items) {
-  var random = new Random();
-
-  // Go through all elements.
-  for (var i = items.length - 1; i > 0; i--) {
-
-    // Pick a pseudorandom number according to the list length
-    var n = random.nextInt(i + 1);
-
-    var temp = items[i];
-    items[i] = items[n];
-    items[n] = temp;
+    time = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        if (second > 0) {
+          second--;
+        } else {
+          time.cancel();
+          Navigator.pop(context);
+          Navigator.push(context,
+          MaterialPageRoute(builder: (context) => FinalScore()));
+        }
+      });
+    });
   }
 
-  return items;
-}*/
+  void stopTime(){
+    time.cancel();
+  }
+
+
   void changeBoxColor(){
     myColors.shuffle();
 
     colorId =randColor.nextInt(9);
-    int i;
-    for(i=0;i<9;i++){
-      randNumbers[i]=myColors[i];
-    }
     
     c1=myColors[0];
     c2=myColors[1];
@@ -63,29 +57,27 @@ class _Layout3x3State extends State<Layout3x3> {
     c7=myColors[6];
     c8=myColors[7];
     c9=myColors[8];
-    /*c1=randColor.nextInt(9);
-    randC=randColor.nextInt(9);
-    if(randC!=c8&&randC!=c7&&randC!=c6&&randC!=c5&&randC!=c4&&randC!=c3&&randC!=c2&&randC!=c1){ c2=randC;}
-    randC=randColor.nextInt(9);
-    if(randC!=c8&&randC!=c7&&randC!=c6&&randC!=c5&&randC!=c4&&randC!=c3&&randC!=c2&&randC!=c1){ c3=randC;}
-    randC=randColor.nextInt(9);
-    if(randC!=c8&&randC!=c7&&randC!=c6&&randC!=c5&&randC!=c4&&randC!=c3&&randC!=c2&&randC!=c1){ c4=randC;}
-    randC=randColor.nextInt(9);
-    if(randC!=c8&&randC!=c7&&randC!=c6&&randC!=c5&&randC!=c4&&randC!=c3&&randC!=c2&&randC!=c1){ c5=randC;}
-    randC=randColor.nextInt(9);
-    if(randC!=c8&&randC!=c7&&randC!=c6&&randC!=c5&&randC!=c4&&randC!=c3&&randC!=c2&&randC!=c1){ c6=randC;}
-    randC=randColor.nextInt(9);
-    if(randC!=c8&&randC!=c7&&randC!=c6&&randC!=c5&&randC!=c4&&randC!=c3&&randC!=c2&&randC!=c1){ c7=randC;}
-    randC=randColor.nextInt(9);
-    if(randC!=c8&&randC!=c7&&randC!=c6&&randC!=c5&&randC!=c4&&randC!=c3&&randC!=c2&&randC!=c1){ c8=randC;}
-    randC=randColor.nextInt(9);
-    if(randC!=c8&&randC!=c7&&randC!=c6&&randC!=c5&&randC!=c4&&randC!=c3&&randC!=c2&&randC!=c1){ c9=randC;}
-    */
   }
 
-  int createRand(){
-    return randIdx.nextInt(9);
+  void scoreCounter(Color c){
+    if(c==myColors[colorId])
+      score=score+5;
+    else{
+      check_error+=1;
+      if(check_error>1){
+        print('hata');
+        stopTime();
+        Navigator.pop(context);
+        Navigator.push(context,
+        MaterialPageRoute(builder: (context) => FinalScore()));
+      }
+    }
   }
+
+  
+  /*int createRand(){
+    return randIdx.nextInt(9);
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -102,23 +94,28 @@ class _Layout3x3State extends State<Layout3x3> {
             ],
           ),*/
           AppBar(
-                title: Text('Color Detecting Game',style: TextStyle(fontSize: 20.0, fontFamily: 'Primetime',color:Colors.white),),
+                title: Text('Color Detecting Game',style: TextStyle(fontSize: 24.0, /*fontFamily: 'Primetime',*/color:Colors.white, fontWeight: FontWeight.bold),),
                 centerTitle: true,
                 backgroundColor: Colors.lightBlueAccent[200],
                 automaticallyImplyLeading: false,
               ),
           Row(
             children: <Widget> [
-              
               Expanded(
                 child:Container(height: 80, color: Colors.grey[100],
-                  child: Column(
+                  child: Row(
                       children:[  
-                        
                         Expanded(child: Container(
-                          child:Text('Try choosing the right color match from the following!',style:TextStyle(color:Colors.grey[700])),
-                          margin: EdgeInsets.all(0.0),
-                          padding: EdgeInsets.fromLTRB(25.0,0.0,0.0,0.0),
+                          child:Text('Time:',style:TextStyle(color:Colors.grey[700],fontSize: 25.0,)),
+                          margin: EdgeInsets.fromLTRB(20.0,10.0,0.0,0.0),
+                          padding: EdgeInsets.fromLTRB(0.0,0.0,0.0,0.0),
+                          alignment:Alignment.center,
+                          ),
+                        ),
+                        Expanded(child: Container(
+                          child:Text('$second',style:TextStyle(color:Colors.grey[700],fontSize: 40.0,fontWeight: FontWeight.bold)),
+                          margin: EdgeInsets.fromLTRB(0.0,10.0,20.0,0.0),
+                          padding: EdgeInsets.fromLTRB(0.0,0.0,0.0,0.0),
                           alignment:Alignment.center,
                           ),
                         ),
@@ -128,23 +125,24 @@ class _Layout3x3State extends State<Layout3x3> {
               ),
               Expanded(   
                   child:Container(height: 80,color: Colors.grey[100], 
-                  padding: EdgeInsets.fromLTRB(60.0,0.0,0.0,0.0),
+                  padding: EdgeInsets.fromLTRB(0.0,0.0,0.0,0.0),
                   child: Row(
                   children:[  
                       Expanded(child: Container(
-                        height: 50.0,
-                        width: 50.0,
-                        child: Card(
-                          color:myColors[colorId],
-                          elevation: 6.0,
+                        child:Text('Next:',style:TextStyle(color:Colors.grey[700],fontSize: 25.0,)),
+                        margin: EdgeInsets.fromLTRB(10.0,10.0,0.0,0.0),
+                        padding: EdgeInsets.all(10.0),
+                        //alignment:Alignment.centerLeft,
                         ),
                       ),
-                      ),
                       Expanded(child: Container(
-                        child:Text('Find It!'),
-                        margin: EdgeInsets.all(0.0),
-                        padding: EdgeInsets.all(10.0),
-                        alignment:Alignment.centerLeft,
+                          height: 66.0,
+                          width: 70.0,
+                          margin: EdgeInsets.fromLTRB(0.0,10.0,35.0,0.0),
+                          child: Card(
+                            color:myColors[colorId],
+                            elevation: 6.0,
+                          ),
                         ),
                       ),
                     ], 
@@ -186,10 +184,10 @@ class _Layout3x3State extends State<Layout3x3> {
                                   TextButton(
                                     onPressed:(){
                                       setState(() {
-                                        /*int idx;
-                                        idx = createRand();*/
-                                        //myColors.shuffle();
-                                        return changeBoxColor();
+                                        timeStarter();
+                                        scoreCounter(c1);
+                                        print(score);
+                                        changeBoxColor();
                                         
                                       });
                                       
@@ -200,7 +198,7 @@ class _Layout3x3State extends State<Layout3x3> {
                                       margin: EdgeInsets.all(8),
                                       padding: EdgeInsets.all(0.0),
                                       decoration: BoxDecoration(
-                                        color:myColors[c1],
+                                        color:c1,
                                         borderRadius:BorderRadius.circular(15),
                                         boxShadow: [
                                           BoxShadow(
@@ -221,8 +219,9 @@ class _Layout3x3State extends State<Layout3x3> {
                                   TextButton(
                                     onPressed:(){
                                       setState(() {
-                                        /*int idx;
-                                        idx = createRand();*/
+                                        timeStarter();
+                                        scoreCounter(c2);
+                                        print(score);
                                         changeBoxColor();
                                       });
                                       
@@ -233,7 +232,7 @@ class _Layout3x3State extends State<Layout3x3> {
                                       margin: EdgeInsets.all(8),
                                       padding: EdgeInsets.all(0.0),
                                       decoration: BoxDecoration(
-                                        color:myColors[c2],
+                                        color:c2,
                                         borderRadius:BorderRadius.circular(15),
                                         boxShadow: [
                                           BoxShadow(
@@ -254,8 +253,9 @@ class _Layout3x3State extends State<Layout3x3> {
                                   TextButton(
                                     onPressed:(){
                                       setState(() {
-                                        /*int idx;
-                                        idx = createRand();*/
+                                        timeStarter();
+                                        scoreCounter(c3);
+                                        print(score);
                                         changeBoxColor();
                                       });
                                       
@@ -266,7 +266,7 @@ class _Layout3x3State extends State<Layout3x3> {
                                       margin: EdgeInsets.all(8),
                                       padding: EdgeInsets.all(0.0),
                                       decoration: BoxDecoration(
-                                        color:myColors[c3],
+                                        color:c3,
                                         borderRadius:BorderRadius.circular(15),
                                         boxShadow: [
                                           BoxShadow(
@@ -296,9 +296,10 @@ class _Layout3x3State extends State<Layout3x3> {
                                   TextButton(
                                     onPressed:(){
                                       setState(() {
-                                        /*int idx;
-                                        idx = createRand();*/
-                                        return changeBoxColor();
+                                        timeStarter();
+                                        scoreCounter(c4);
+                                        print(score);
+                                        changeBoxColor();
                                       });
                                       
                                     },
@@ -308,7 +309,7 @@ class _Layout3x3State extends State<Layout3x3> {
                                       margin: EdgeInsets.all(8),
                                       padding: EdgeInsets.all(0.0),
                                       decoration: BoxDecoration(
-                                        color:myColors[c4],
+                                        color:c4,
                                         borderRadius:BorderRadius.circular(15),
                                         boxShadow: [
                                           BoxShadow(
@@ -329,9 +330,10 @@ class _Layout3x3State extends State<Layout3x3> {
                                   TextButton(
                                     onPressed:(){
                                       setState(() {
-                                        /*int idx;
-                                        idx = createRand();*/
-                                        return changeBoxColor();
+                                        timeStarter();
+                                        scoreCounter(c5);
+                                        print(score);
+                                        changeBoxColor();
                                       });
                                       
                                     },
@@ -341,7 +343,7 @@ class _Layout3x3State extends State<Layout3x3> {
                                       margin: EdgeInsets.all(8),
                                       padding: EdgeInsets.all(0.0),
                                       decoration: BoxDecoration(
-                                        color:myColors[c5],
+                                        color:c5,
                                         borderRadius:BorderRadius.circular(15),
                                         boxShadow: [
                                           BoxShadow(
@@ -362,9 +364,10 @@ class _Layout3x3State extends State<Layout3x3> {
                                   TextButton(
                                     onPressed:(){
                                       setState(() {
-                                        /*int idx;
-                                        idx = createRand();*/
-                                        return changeBoxColor();
+                                        timeStarter();
+                                        scoreCounter(c6);
+                                        print(score);
+                                        changeBoxColor();
                                       });
                                       
                                     },
@@ -374,7 +377,7 @@ class _Layout3x3State extends State<Layout3x3> {
                                       margin: EdgeInsets.all(8),
                                       padding: EdgeInsets.all(0.0),
                                       decoration: BoxDecoration(
-                                        color:myColors[c6],
+                                        color:c6,
                                         borderRadius:BorderRadius.circular(15),
                                         boxShadow: [
                                           BoxShadow(
@@ -403,8 +406,9 @@ class _Layout3x3State extends State<Layout3x3> {
                                   TextButton(
                                     onPressed:(){
                                       setState(() {
-                                        /*int idx;
-                                        idx = createRand();*/
+                                        timeStarter();
+                                        scoreCounter(c7);
+                                        print(score);
                                         return changeBoxColor();
                                       });
                                       
@@ -415,7 +419,7 @@ class _Layout3x3State extends State<Layout3x3> {
                                       margin: EdgeInsets.all(8),
                                       padding: EdgeInsets.all(0.0),
                                       decoration: BoxDecoration(
-                                        color:myColors[c7],
+                                        color:c7,
                                         borderRadius:BorderRadius.circular(15),
                                         boxShadow: [
                                           BoxShadow(
@@ -436,8 +440,9 @@ class _Layout3x3State extends State<Layout3x3> {
                                   TextButton(
                                     onPressed:(){
                                       setState(() {
-                                        /*int idx;
-                                        idx = createRand();*/
+                                        timeStarter();
+                                        scoreCounter(c8);
+                                        print(score);
                                         return changeBoxColor();
                                       });
                                       
@@ -448,7 +453,7 @@ class _Layout3x3State extends State<Layout3x3> {
                                       margin: EdgeInsets.all(8),
                                       padding: EdgeInsets.all(0.0),
                                       decoration: BoxDecoration(
-                                        color:myColors[c8],
+                                        color:c8,
                                         borderRadius:BorderRadius.circular(15),
                                         boxShadow: [
                                           BoxShadow(
@@ -469,8 +474,9 @@ class _Layout3x3State extends State<Layout3x3> {
                                   TextButton(
                                     onPressed:(){
                                       setState(() {
-                                        /*int idx;
-                                        idx = createRand();*/
+                                        timeStarter();
+                                        scoreCounter(c9);
+                                        print(score);
                                         return changeBoxColor();
                                       });
                                       
@@ -481,7 +487,7 @@ class _Layout3x3State extends State<Layout3x3> {
                                       margin: EdgeInsets.all(8),
                                       padding: EdgeInsets.all(0.0),
                                       decoration: BoxDecoration(
-                                        color:myColors[c9],
+                                        color:c9,
                                         borderRadius:BorderRadius.circular(15),
                                         boxShadow: [
                                           BoxShadow(
@@ -528,7 +534,7 @@ class _Layout3x3State extends State<Layout3x3> {
                     )
                   ),
                   child: Text(
-                    'Second Page',
+                    'End the game',
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
