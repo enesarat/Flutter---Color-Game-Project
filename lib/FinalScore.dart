@@ -8,7 +8,8 @@ import 'main.dart';
 class FinalScore extends StatefulWidget {
    final int result;
    final int layout;
-   const FinalScore(this.result,this.layout);
+   final int msg;
+   const FinalScore(this.result,this.layout,this.msg);
   @override
   _FinalScoreState createState() => _FinalScoreState();
 }
@@ -28,16 +29,13 @@ class _FinalScoreState extends State<FinalScore> {
                 children: <Widget>[
                   Expanded(
                     child: Container(
-                      margin: EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
-                      //padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-
-                      //padding: EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 3.0),
+                      margin: EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),                                            
                       decoration: BoxDecoration(
-                      gradient: RadialGradient(
-                        colors: [Colors.white, Colors.white],
-                        focal: Alignment(0.0, 0.0),
-                        focalRadius: 4,
-                      ),
+                        gradient: RadialGradient(
+                          colors: [Colors.white, Colors.white],
+                          focal: Alignment(0.0, 0.0),
+                          focalRadius: 4,
+                        ),
                       ),
                       child: Text(
                         'GAME OVER',textAlign: TextAlign.center,
@@ -48,18 +46,38 @@ class _FinalScoreState extends State<FinalScore> {
                             foreground: Paint()
                             ..style = PaintingStyle.stroke
                             ..strokeWidth = 2
-                            ..color = Colors.red[600],
-                            
-                            ),
-                            
+                            ..color = Colors.red[600],                            
+                        ),
                       ),
                     ),
-                    
                   ),
                 ],
-                
               ),
             ),
+            if(widget.msg==1)
+              Container(
+                alignment: Alignment.bottomCenter,
+                color:Colors.white,
+                padding:EdgeInsets.only(bottom:8,top:8),
+                margin:EdgeInsets.only(bottom:20),
+                child: Text("Time is up!",textAlign: TextAlign.center,style:TextStyle(color:Colors.red[700],fontSize: 20.0,))
+              )
+            else if(widget.msg==2)
+              Container(
+                alignment: Alignment.bottomCenter,
+                color:Colors.white,
+                padding:EdgeInsets.only(bottom:8,top:8),
+                margin:EdgeInsets.only(bottom:20),
+                child: Text("You selected wrong color!",textAlign: TextAlign.center,style:TextStyle(color:Colors.red[700],fontSize: 20.0,))
+              )
+            else
+              Container(
+                alignment: Alignment.bottomCenter,
+                color:Colors.white,
+                padding:EdgeInsets.only(bottom:8,top:8),
+                margin:EdgeInsets.only(bottom:20),
+                child: Text("You left the game!",textAlign: TextAlign.center,style:TextStyle(color:Colors.red[700],fontSize: 20.0,))
+              ),
             Expanded(
               child: Column(
               children: [
@@ -67,9 +85,7 @@ class _FinalScoreState extends State<FinalScore> {
                   child: Container(
                     width:190,
                     margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-                    //padding: EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 3.0),
                     height: 60,
-                    
                     child: Text(
                       'SCORE:',textAlign: TextAlign.center,
                       style: TextStyle(
@@ -78,7 +94,6 @@ class _FinalScoreState extends State<FinalScore> {
                       ),
                     ),
                   ),
-                  
                 ),
                 Container(
                   child: Container(
@@ -109,14 +124,9 @@ class _FinalScoreState extends State<FinalScore> {
                               ),
                             ],
                           ),
-                          
-                          
                       ),
-                          
                   ),
-
                 ),  
-                
               ],
               ),
             ),
@@ -216,7 +226,7 @@ class _FinalScoreState extends State<FinalScore> {
                 ),)
           ],
         ),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }

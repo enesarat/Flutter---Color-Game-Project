@@ -12,14 +12,16 @@ class _Layout4x4State extends State<Layout4x4> {
   List myColors = [
     Colors.lightGreen,Colors.cyan,Colors.red,Colors.orange,Colors.pink,Colors.purple,
     Colors.teal,Colors.brown,Colors.yellow,Colors.brown[400],Colors.pinkAccent,Colors.blueAccent,Colors.indigo,
-    Colors.indigoAccent,Colors.greenAccent[400],Colors.limeAccent[400]
+    Colors.indigoAccent[400],Colors.greenAccent[400],Colors.limeAccent[400]
   ];
   Random randColor =new Random();
   Timer time;
   int score=0;
   int check_error=0;
+  int check_color=0;
   int colorId = 0;
   int second=60;
+  Color nextColor,checkColor;
   Color c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15,c16;
   
   void starterColor(){    
@@ -47,7 +49,7 @@ class _Layout4x4State extends State<Layout4x4> {
           time.cancel();
           Navigator.pop(context);
           Navigator.push(context,
-          MaterialPageRoute(builder: (context) => FinalScore(score,4)));
+          MaterialPageRoute(builder: (context) => FinalScore(score,4,1)));
         }
       });
     });
@@ -59,9 +61,30 @@ class _Layout4x4State extends State<Layout4x4> {
 
   void changeBoxColor(){
     myColors.shuffle();
-
     colorId =randColor.nextInt(16);
-    
+    checkColor=myColors[colorId];
+
+    if(check_color==0){
+      nextColor=checkColor;
+      check_color++;
+    }
+    else if(nextColor==checkColor){       // here we make double check
+      colorId =randColor.nextInt(16);
+      checkColor=myColors[colorId];
+      if(checkColor==nextColor){          // after first color fix change if the colors are still the same  
+        colorId =randColor.nextInt(16);
+        checkColor=myColors[colorId];
+        nextColor=checkColor;             // a new color is assigned again 
+      }
+      else{
+        nextColor=checkColor;             // If the colors are still not the same, the color assignment is complete 
+      }      
+    }
+    else
+    {
+      nextColor=checkColor;
+    }
+
     c1=myColors[0];
     c2=myColors[1];
     c3=myColors[2];
@@ -86,11 +109,10 @@ class _Layout4x4State extends State<Layout4x4> {
     else{
       check_error+=1;
       if(check_error>0){
-        print('hata');
         stopTime();
         Navigator.pop(context);
         Navigator.push(context,
-        MaterialPageRoute(builder: (context) => FinalScore(score,4)));
+        MaterialPageRoute(builder: (context) => FinalScore(score,4,2)));
       }
     }
   }
@@ -102,11 +124,10 @@ class _Layout4x4State extends State<Layout4x4> {
         children: <Widget> [
           
           AppBar(
-                title: Text('Color Game',style: TextStyle(fontSize: 24.0, /*fontFamily: 'Primetime',*/color:Colors.white),),
+                title: Text('Color Game',style: TextStyle(fontSize: 24.0,color:Colors.white, fontWeight: FontWeight.bold),),
                 centerTitle: true,
                 backgroundColor: Colors.lightBlueAccent[200],
                 automaticallyImplyLeading: false,
-
               ),
           Row(
             children: <Widget> [
@@ -138,10 +159,9 @@ class _Layout4x4State extends State<Layout4x4> {
                   child: Row(
                   children:[  
                       Expanded(child: Container(
-                        child:Text('Next:',style:TextStyle(color:Colors.grey[700],fontSize: 25.0,)),
-                        margin: EdgeInsets.fromLTRB(10.0,10.0,0.0,0.0),
-                        padding: EdgeInsets.all(10.0),
-                        //alignment:Alignment.centerLeft,
+                          child:Text('Next:',style:TextStyle(color:Colors.grey[700],fontSize: 25.0,)),
+                          margin: EdgeInsets.fromLTRB(10.0,10.0,0.0,0.0),
+                          padding: EdgeInsets.all(10.0),                        
                         ),
                       ),
                       Expanded(child: Container(
@@ -150,7 +170,7 @@ class _Layout4x4State extends State<Layout4x4> {
                           margin: EdgeInsets.fromLTRB(0.0,10.0,46.0,4.0),
                           decoration: BoxDecoration(
                             borderRadius:BorderRadius.circular(8.96),
-                            color:myColors[colorId],
+                            color:nextColor,
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey.withOpacity(0.5),
@@ -184,8 +204,7 @@ class _Layout4x4State extends State<Layout4x4> {
               width: MediaQuery.of(context).size.width,
               child: Card(
                 color: Colors.white,
-                elevation: 6.0,
-                
+                elevation: 6.0,                
                 child:Padding(
                   padding: const EdgeInsets.all(6),
                   child:Row(
@@ -331,16 +350,16 @@ class _Layout4x4State extends State<Layout4x4> {
                     style: TextStyle(color: Colors.white,fontSize: 18.0,fontWeight: FontWeight.w400,),
                   ),
                   onPressed: () {
+                    stopTime();
                     Navigator.pop(context);
                     Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => FinalScore(score,4)));
+                    MaterialPageRoute(builder: (context) => FinalScore(score,4,3)));
                   },
                 ),
               ],
-            ),
-            
+            ),            
           ),
-          
+          Flexible(child:Container(color:Colors.grey[100],height: 100,))          
         ],
       ),
     );

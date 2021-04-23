@@ -11,7 +11,7 @@ class Layout5x5 extends StatefulWidget {
 class _Layout5x5State extends State<Layout5x5> {
   List myColors = [
     Colors.lightGreen,Colors.cyan,Colors.red,Colors.orange,Colors.pink,Colors.purple,Colors.teal,Colors.brown,
-    Colors.yellow,Colors.brown[400],Colors.pinkAccent,Colors.blueAccent,Colors.indigo,Colors.indigoAccent,
+    Colors.yellow,Colors.brown[400],Colors.pinkAccent,Colors.blueAccent,Colors.indigo,Colors.indigoAccent[400],
     Colors.greenAccent[400],Colors.limeAccent[400],Colors.orange[700],Colors.red[800],Colors.deepOrange[400],
     Colors.deepOrangeAccent[700],Colors.deepPurple[600],Colors.lightGreen[900],Colors.cyanAccent[400],Colors.blueGrey[600],Colors.grey[600]
   ];
@@ -19,8 +19,10 @@ class _Layout5x5State extends State<Layout5x5> {
   Timer time;
   int score=0;
   int check_error=0;
+  int check_color=0;
   int colorId = 0;
   int second=60;
+  Color nextColor,checkColor;
   Color c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15,c16,c17,c18,c19,c20,c21,c22,c23,c24,c25;
   
   void starterColor(){    
@@ -48,7 +50,7 @@ class _Layout5x5State extends State<Layout5x5> {
           time.cancel();
           Navigator.pop(context);
           Navigator.push(context,
-          MaterialPageRoute(builder: (context) => FinalScore(score,5)));
+          MaterialPageRoute(builder: (context) => FinalScore(score,5,1)));
         }
       });
     });
@@ -60,9 +62,31 @@ class _Layout5x5State extends State<Layout5x5> {
 
   void changeBoxColor(){
     myColors.shuffle();
-
     colorId =randColor.nextInt(25);
-    
+    checkColor=myColors[colorId];
+
+    if(check_color==0){
+      nextColor=checkColor;
+      check_color++;
+    }
+    else if(nextColor==checkColor){       // here we make double check
+      colorId =randColor.nextInt(25);
+      checkColor=myColors[colorId];
+      if(checkColor==nextColor){          // after first color fix change if the colors are still the same  
+        colorId =randColor.nextInt(25);
+        checkColor=myColors[colorId];
+        nextColor=checkColor;             // a new color is assigned again 
+      }
+      else{
+        nextColor=checkColor;             // If the colors are still not the same, the color assignment is complete 
+      }
+      
+    }
+    else
+    {
+      nextColor=checkColor;
+    }
+
     c1=myColors[0];
     c2=myColors[1];
     c3=myColors[2];
@@ -96,11 +120,10 @@ class _Layout5x5State extends State<Layout5x5> {
     else{
       check_error+=1;
       if(check_error>0){
-        print('hata');
         stopTime();
         Navigator.pop(context);
         Navigator.push(context,
-        MaterialPageRoute(builder: (context) => FinalScore(score,5)));
+        MaterialPageRoute(builder: (context) => FinalScore(score,5,2)));
       }
     }
   }
@@ -112,11 +135,10 @@ class _Layout5x5State extends State<Layout5x5> {
         children: <Widget> [
           
           AppBar(
-                title: Text('Color Game',style: TextStyle(fontSize: 24.0, /*fontFamily: 'Primetime',*/color:Colors.white),),
+                title: Text('Color Game',style: TextStyle(fontSize: 24.0,color:Colors.white, fontWeight: FontWeight.bold),),
                 centerTitle: true,
                 backgroundColor: Colors.lightBlueAccent[200],
                 automaticallyImplyLeading: false,
-
               ),
           Row(
             children: <Widget> [
@@ -150,8 +172,7 @@ class _Layout5x5State extends State<Layout5x5> {
                       Expanded(child: Container(
                         child:Text('Next:',style:TextStyle(color:Colors.grey[700],fontSize: 25.0,)),
                         margin: EdgeInsets.fromLTRB(10.0,10.0,0.0,0.0),
-                        padding: EdgeInsets.all(10.0),
-                        //alignment:Alignment.centerLeft,
+                        padding: EdgeInsets.all(10.0),                        
                         ),
                       ),
                       Expanded(child: Container(
@@ -160,7 +181,7 @@ class _Layout5x5State extends State<Layout5x5> {
                           margin: EdgeInsets.fromLTRB(0.0,10.0,46.0,4.0),
                           decoration: BoxDecoration(
                             borderRadius:BorderRadius.circular(8.96),
-                            color:myColors[colorId],
+                            color:nextColor,
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey.withOpacity(0.5),
@@ -183,8 +204,7 @@ class _Layout5x5State extends State<Layout5x5> {
           Container(
             color: Colors.grey[100],
             alignment: Alignment.topCenter,
-            padding: EdgeInsets.only(
-                /*top: MediaQuery.of(context).size.height * .1,*/
+            padding: EdgeInsets.only(                
                 top:20.0,
                 right: 10.0,
                 left: 10.0,
@@ -194,8 +214,7 @@ class _Layout5x5State extends State<Layout5x5> {
               width: MediaQuery.of(context).size.width,
               child: Card(
                 color: Colors.white,
-                elevation: 6.0,
-                
+                elevation: 6.0,                
                 child:Padding(
                   padding: const EdgeInsets.all(6),
                   child:Row(
@@ -393,21 +412,20 @@ class _Layout5x5State extends State<Layout5x5> {
                     style: TextStyle(color: Colors.white,fontSize: 18.0,fontWeight: FontWeight.w400,),
                   ),
                   onPressed: () {
+                    stopTime();
                     Navigator.pop(context);
                     Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => FinalScore(score,5)));
+                    MaterialPageRoute(builder: (context) => FinalScore(score,5,3)));
                   },
                 ),
               ],
             ),
-            
           ),
-          
+          Flexible(child:Container(color:Colors.grey[100],height: 100,))
         ],
       ),
     );
   }
-
   TextButton buildColorBox(Color boxColor) {
     return TextButton(
       onPressed:(){
@@ -417,8 +435,7 @@ class _Layout5x5State extends State<Layout5x5> {
           print(score);
           changeBoxColor();
           
-        });
-        
+        });        
       },
       child:Container(
         height:52,width: double.infinity,
@@ -437,7 +454,6 @@ class _Layout5x5State extends State<Layout5x5> {
             ),
           ],
         ),
-        
       ),
     );
   }

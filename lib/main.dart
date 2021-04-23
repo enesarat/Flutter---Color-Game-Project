@@ -11,7 +11,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,9 +31,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      /*appBar: AppBar(
-        title: Text('Color Detecting Game',style: TextStyle(fontSize: 20.0, fontFamily: 'Primetime',color:Colors.white),),
-      ),*/
+
       backgroundColor: Colors.lightBlueAccent[400],
       body: Container(
        margin: EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 30.0),
@@ -47,40 +44,31 @@ class _MyHomePageState extends State<MyHomePage> {
                   Expanded(
                     child: Container(
                       margin: EdgeInsets.fromLTRB(0.0, 100.0, 0.0, 0.0),
-                      //padding: EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 3.0),
-                 
-                      child: Text(
-                        'Color Game',textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 60.0,
-                            //fontFamily: 'Primetime',
-                            fontWeight: FontWeight.w800,
-                            color: Colors.lightBlueAccent[400],
-                                  shadows: [
-                                    Shadow( // bottomLeft
-                                      offset: Offset(-1.5, -1.5),
-                                      color: Colors.white
-                                    ),
-                                    Shadow( // bottomRight
-                                      offset: Offset(1.5, -1.5),
-                                      color: Colors.white
-                                    ),
-                                    Shadow( // topRight
-                                      offset: Offset(1.5, 1.5),
-                                      color: Colors.white
-                                    ),
-                                    Shadow( // topLeft
-                                      offset: Offset(-1.5, 1.5),
-                                      color: Colors.white
-                                    ),
-                                  ]
-                            ),
+                      child:
+                      Container(
+                        color:Colors.white,
+                        alignment: Alignment.center,
+                        height: 100,
+                        child:RichText(
+                          text: TextSpan(
+                            text: 'C',
+                            style: TextStyle(fontSize: 52,color:Colors.blue,fontWeight: FontWeight.w800,),
+                            children: <TextSpan>[
+                              TextSpan(text: 'O',style: TextStyle(color: Colors.pink,)),
+                              TextSpan(text: 'L',style: TextStyle(color: Colors.yellow[600],)),
+                              TextSpan(text: 'O',style: TextStyle(color: Colors.green,)),
+                              TextSpan(text: 'R ',style: TextStyle(color: Colors.orange,)),
+                              TextSpan(text: ' G',style: TextStyle(color: Colors.deepPurple,)),
+                              TextSpan(text: 'A',style: TextStyle(color: Colors.lightBlueAccent[400],)),
+                              TextSpan(text: 'M',style: TextStyle(color: Colors.pinkAccent[400],)),
+                              TextSpan(text: 'E',style: TextStyle(color: Colors.greenAccent[400],)),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
-                    
                   ),
                 ],
-                
               ),
             ),
             Expanded(
@@ -90,7 +78,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Container(
                       width:180,
                       margin: EdgeInsets.fromLTRB(0.0, 80.0, 0.0, 0.0),
-                      //padding: EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 3.0),
                       height: 80,
                       
                       child: Text(
@@ -102,13 +89,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                     ),
-                    
                   ),
                 Center(
                   child: Container(
                     height: 80,
                     width: 350,
-                    margin: EdgeInsets.fromLTRB(0.0,0.0,0.0,120.0),
+                    margin: EdgeInsets.fromLTRB(0.0,0.0,0.0,100.0),
 
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -218,7 +204,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }

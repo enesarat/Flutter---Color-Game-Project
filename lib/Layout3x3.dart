@@ -14,8 +14,10 @@ class _Layout3x3State extends State<Layout3x3> {
   Timer time;
   int score=0;
   int check_error=0;
+  int check_color=0;
   int colorId = 0;
   int second=60;
+  Color nextColor,checkColor;
   Color c1,c2,c3,c4,c5,c6,c7,c8,c9;
 
   void starterColor(){    
@@ -43,7 +45,7 @@ class _Layout3x3State extends State<Layout3x3> {
           time.cancel();
           Navigator.pop(context);
           Navigator.push(context,
-          MaterialPageRoute(builder: (context) => FinalScore(score,3)));
+          MaterialPageRoute(builder: (context) => FinalScore(score,3,1)));
         }
       });
     });
@@ -57,7 +59,30 @@ class _Layout3x3State extends State<Layout3x3> {
     myColors.shuffle();
 
     colorId =randColor.nextInt(9);
-    
+    checkColor=myColors[colorId];
+
+    if(check_color==0){
+      nextColor=checkColor;
+      check_color++;
+    }
+    else if(nextColor==checkColor){       // here we make double check
+      colorId =randColor.nextInt(9);
+      checkColor=myColors[colorId];
+      if(checkColor==nextColor){          // after first color fix change if the colors are still the same  
+        colorId =randColor.nextInt(9);
+        checkColor=myColors[colorId];
+        nextColor=checkColor;             // a new color is assigned again 
+      }
+      else{
+        nextColor=checkColor;             // If the colors are still not the same, the color assignment is complete 
+      }
+      
+    }
+    else
+    {
+      nextColor=checkColor;
+    }
+
     c1=myColors[0];
     c2=myColors[1];
     c3=myColors[2];
@@ -75,11 +100,10 @@ class _Layout3x3State extends State<Layout3x3> {
     else{
       check_error+=1;
       if(check_error>0){
-        print('hata');
         stopTime();
         Navigator.pop(context);
         Navigator.push(context,
-        MaterialPageRoute(builder: (context) => FinalScore(score,3)));
+        MaterialPageRoute(builder: (context) => FinalScore(score,3,2)));
       }
     }
   }
@@ -92,7 +116,7 @@ class _Layout3x3State extends State<Layout3x3> {
         children: <Widget> [
           
           AppBar(
-                title: Text('Color Game',style: TextStyle(fontSize: 24.0, /*fontFamily: 'Primetime',*/color:Colors.white, fontWeight: FontWeight.bold),),
+                title: Text('Color Game',style: TextStyle(fontSize: 24.0,color:Colors.white, fontWeight: FontWeight.bold),),
                 centerTitle: true,
                 backgroundColor: Colors.lightBlueAccent[200],
                 automaticallyImplyLeading: false,
@@ -129,8 +153,7 @@ class _Layout3x3State extends State<Layout3x3> {
                       Expanded(child: Container(
                         child:Text('Next:',style:TextStyle(color:Colors.grey[700],fontSize: 25.0,)),
                         margin: EdgeInsets.fromLTRB(10.0,10.0,0.0,0.0),
-                        padding: EdgeInsets.all(10.0),
-                        //alignment:Alignment.centerLeft,
+                        padding: EdgeInsets.all(10.0),                        
                         ),
                       ),
                       Expanded(child: Container(
@@ -139,7 +162,7 @@ class _Layout3x3State extends State<Layout3x3> {
                           margin: EdgeInsets.fromLTRB(0.0,10.0,46.0,4.0),
                           decoration: BoxDecoration(
                             borderRadius:BorderRadius.circular(8.96),
-                            color:myColors[colorId],
+                            color:nextColor,
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey.withOpacity(0.5),
@@ -162,8 +185,7 @@ class _Layout3x3State extends State<Layout3x3> {
           Container(
             color: Colors.grey[100],
             alignment: Alignment.topCenter,
-            padding: EdgeInsets.only(
-                /*top: MediaQuery.of(context).size.height * .1,*/
+            padding: EdgeInsets.only(                
                 top:20.0,
                 right: 10.0,
                 left: 10.0,
@@ -281,16 +303,16 @@ class _Layout3x3State extends State<Layout3x3> {
                     style: TextStyle(color: Colors.white,fontSize: 18.0,fontWeight: FontWeight.w400,),
                   ),
                   onPressed: () {
+                    stopTime();
                     Navigator.pop(context);
                     Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => FinalScore(score,3)));
+                    MaterialPageRoute(builder: (context) => FinalScore(score,3,3)));
                   },
                 ),
               ],
-            ),
-            
+            ),            
           ),
-          
+          Flexible(child:Container(color:Colors.grey[100],height: 100,))
         ],
       ),
     );
