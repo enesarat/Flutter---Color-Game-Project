@@ -35,8 +35,9 @@ class _MyHomePageState extends State<MyHomePage> {
       /*appBar: AppBar(
         title: Text('Color Detecting Game',style: TextStyle(fontSize: 20.0, fontFamily: 'Primetime',color:Colors.white),),
       ),*/
+      backgroundColor: Colors.lightBlueAccent[400],
       body: Container(
-       margin: EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 60.0),
+       margin: EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 30.0),
 
         child: Column(
           children: <Widget>[
@@ -49,11 +50,30 @@ class _MyHomePageState extends State<MyHomePage> {
                       //padding: EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 3.0),
                  
                       child: Text(
-                        'Color Detecting Game',textAlign: TextAlign.center,
+                        'Color Game',textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontSize: 40.0,
-                            fontFamily: 'Primetime',
-                            color: Colors.blue,
+                            fontSize: 60.0,
+                            //fontFamily: 'Primetime',
+                            fontWeight: FontWeight.w800,
+                            color: Colors.lightBlueAccent[400],
+                                  shadows: [
+                                    Shadow( // bottomLeft
+                                      offset: Offset(-1.5, -1.5),
+                                      color: Colors.white
+                                    ),
+                                    Shadow( // bottomRight
+                                      offset: Offset(1.5, -1.5),
+                                      color: Colors.white
+                                    ),
+                                    Shadow( // topRight
+                                      offset: Offset(1.5, 1.5),
+                                      color: Colors.white
+                                    ),
+                                    Shadow( // topLeft
+                                      offset: Offset(-1.5, 1.5),
+                                      color: Colors.white
+                                    ),
+                                  ]
                             ),
                       ),
                     ),
@@ -68,8 +88,8 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 Expanded(
                     child: Container(
-                      width:190,
-                      margin: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 0.0),
+                      width:180,
+                      margin: EdgeInsets.fromLTRB(0.0, 80.0, 0.0, 0.0),
                       //padding: EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 3.0),
                       height: 80,
                       
@@ -77,7 +97,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         'Select a difficulty level to start the game!',textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 18.0,
-                          color:Colors.lightBlue[700],                          
+                          color:Colors.white,  
+                          fontWeight: FontWeight.w300,                        
                         ),
                       ),
                     ),
@@ -97,10 +118,10 @@ class _MyHomePageState extends State<MyHomePage> {
                             margin: EdgeInsets.all(12.0),
                             child: ElevatedButton(
                               style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
                                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(24.0),
-                                    side: BorderSide(color: Colors.blue[500])
                                   )
                                 )
                               ),
@@ -115,6 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 child: Text(
                                   "3x3\nLayout",
                                   textAlign: TextAlign.center,
+                                  style: TextStyle(color: Colors.lightBlueAccent[400],fontWeight: FontWeight.w700),
                                 ),
                                 margin: EdgeInsets.all(0.0),
                                 padding:
@@ -128,10 +150,10 @@ class _MyHomePageState extends State<MyHomePage> {
                             margin: EdgeInsets.all(12.0),
                             child: ElevatedButton(
                               style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
                                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(24.0),
-                                    side: BorderSide(color: Colors.blue[500])
                                   )
                                 )
                               ),
@@ -146,6 +168,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 child: Text(
                                   "4x4\nLayout",
                                   textAlign: TextAlign.center,
+                                  style: TextStyle(color: Colors.lightBlueAccent[400],fontWeight: FontWeight.w700),
                                 ),
                                 margin: EdgeInsets.all(0.0),
                                 padding:
@@ -159,10 +182,10 @@ class _MyHomePageState extends State<MyHomePage> {
                             margin: EdgeInsets.all(12.0),
                             child: ElevatedButton(
                               style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
                                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(24.0),
-                                    side: BorderSide(color: Colors.blue[500])
                                   )
                                 )
                               ),
@@ -177,6 +200,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 child: Text(
                                   "5x5\nLayout",
                                   textAlign: TextAlign.center,
+                                  style: TextStyle(color: Colors.lightBlueAccent[400],fontWeight: FontWeight.w700),
                                 ),
                                 margin: EdgeInsets.all(0.0),
                                 padding:

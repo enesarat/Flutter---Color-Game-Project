@@ -6,20 +6,21 @@ import 'main.dart';
 
 
 class FinalScore extends StatefulWidget {
+   final int result;
+   final int layout;
+   const FinalScore(this.result,this.layout);
   @override
   _FinalScoreState createState() => _FinalScoreState();
 }
 
 class _FinalScoreState extends State<FinalScore> {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      /*appBar: AppBar(
-        title: Text('Color Detecting Game',style: TextStyle(fontSize: 20.0, fontFamily: 'Primetime',color:Colors.white),),
-      ),*/
+      backgroundColor: Colors.lightBlueAccent[400],      
       body: Container(
        margin: EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 15.0),
-
         child: Column(
           children: <Widget>[
             Expanded(
@@ -28,15 +29,29 @@ class _FinalScoreState extends State<FinalScore> {
                   Expanded(
                     child: Container(
                       margin: EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
+                      //padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+
                       //padding: EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 3.0),
-                 
+                      decoration: BoxDecoration(
+                      gradient: RadialGradient(
+                        colors: [Colors.white, Colors.white],
+                        focal: Alignment(0.0, 0.0),
+                        focalRadius: 4,
+                      ),
+                      ),
                       child: Text(
                         'GAME OVER',textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 60.0,
                             fontWeight: FontWeight.bold,
-                            color: Colors.grey[500],
+                            //color: Colors.white,
+                            foreground: Paint()
+                            ..style = PaintingStyle.stroke
+                            ..strokeWidth = 2
+                            ..color = Colors.red[600],
+                            
                             ),
+                            
                       ),
                     ),
                     
@@ -59,7 +74,7 @@ class _FinalScoreState extends State<FinalScore> {
                       'SCORE:',textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 25.0,
-                        color:Colors.lightBlue[700],                          
+                        color:Colors.white,                          
                       ),
                     ),
                   ),
@@ -74,10 +89,10 @@ class _FinalScoreState extends State<FinalScore> {
                         width: 150,
                         child:Center(
                           child: Text(
-                              '60',textAlign: TextAlign.center,
+                              '${widget.result}',textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 50.0,
-                                  color: Colors.deepPurple[600],
+                                  color: Colors.black,
                                   fontWeight:FontWeight.bold,
                                   ),
                             ),
@@ -120,12 +135,10 @@ class _FinalScoreState extends State<FinalScore> {
                             margin: EdgeInsets.all(12.0),
                             child: ElevatedButton(
                               style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-
+                                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
                                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(32.0),
-                                    side: BorderSide(color: Colors.blue[500])
                                   )
                                 )
                               ),
@@ -143,7 +156,7 @@ class _FinalScoreState extends State<FinalScore> {
                                 child: Text(
                                   "MAIN MENU",
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 18),
+                                  style: TextStyle(color: Colors.lightBlueAccent[400],fontWeight: FontWeight.w700,fontSize: 18),
 
                                 ),
                               ),
@@ -159,28 +172,35 @@ class _FinalScoreState extends State<FinalScore> {
                             margin: EdgeInsets.all(12.0),
                             child: ElevatedButton(
                               style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
                                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(32.0),
-                                    side: BorderSide(color: Colors.blue[500])
                                   )
                                 )
                               ),
                               onPressed: () {
+                                Navigator.pop(context);
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Layout5x5()),
+                                      builder: (context){
+                                        if(widget.layout==3)
+                                          return Layout3x3();
+                                        else if(widget.layout==4)
+                                          return Layout4x4();
+                                        else
+                                          return Layout5x5();
+                                      }),
                                 );
                               },
                               child: Container(
                                 height: 100,
                                 child:Center(
                                   child: Text(
-                                    "QUIT",
+                                    "REPLAY",
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(fontSize: 20),
+                                  style: TextStyle(color:Colors.greenAccent[400],fontWeight: FontWeight.w700,fontSize: 18),
                                   ),
                                 ),
                                 margin: EdgeInsets.all(0.0),
