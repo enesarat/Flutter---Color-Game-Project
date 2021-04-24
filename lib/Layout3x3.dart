@@ -20,10 +20,6 @@ class _Layout3x3State extends State<Layout3x3> {
   Color nextColor,checkColor;
   Color c1,c2,c3,c4,c5,c6,c7,c8,c9;
 
-  void starterColor(){    
-    c1 =myColors[randColor.nextInt(9)];
-  }
-
   void initState() {
     super.initState();
     changeBoxColor();
@@ -209,17 +205,17 @@ class _Layout3x3State extends State<Layout3x3> {
                               children:<Widget>[
                                 Column(
                                 children: [
-                                  buildColorBox(c1,score),
+                                  buildColorBox(c1),
                                 ],
                               ),
                               Column(
                                 children: [
-                                  buildColorBox(c2,score),
+                                  buildColorBox(c2),
                                 ],
                               ),
                               Column(
                                 children: [
-                                  buildColorBox(c3,score),
+                                  buildColorBox(c3),
                                 ],
                               ),
                             ]
@@ -233,17 +229,17 @@ class _Layout3x3State extends State<Layout3x3> {
                               children:<Widget>[
                                Column(
                                 children: [
-                                  buildColorBox(c4,score),
+                                  buildColorBox(c4),
                                 ],
                               ),
                               Column(
                                 children: [
-                                  buildColorBox(c5,score),
+                                  buildColorBox(c5),
                                 ],
                               ),
                               Column(
                                 children: [
-                                  buildColorBox(c6,score),
+                                  buildColorBox(c6),
                                 ],
                               ),
                             ]
@@ -256,17 +252,17 @@ class _Layout3x3State extends State<Layout3x3> {
                               children:<Widget>[
                                 Column(
                                 children: [
-                                  buildColorBox(c7,score),
+                                  buildColorBox(c7),
                                 ],
                               ),
                               Column(
                                 children: [
-                                  buildColorBox(c8,score),
+                                  buildColorBox(c8),
                                 ],
                               ),
                               Column(
                                 children: [
-                                  buildColorBox(c9,score),
+                                  buildColorBox(c9),
                                 ],
                               ),
                             ]
@@ -318,7 +314,7 @@ class _Layout3x3State extends State<Layout3x3> {
     );
   }
 
-  TextButton buildColorBox(Color boxColor,int currentScore) {
+  TextButton buildColorBox(Color boxColor) {
     return TextButton(
       onPressed:(){
         setState(() {

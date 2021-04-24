@@ -23,10 +23,6 @@ class _Layout4x4State extends State<Layout4x4> {
   int second=60;
   Color nextColor,checkColor;
   Color c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15,c16;
-  
-  void starterColor(){    
-    c1 =myColors[randColor.nextInt(9)];
-  }
 
   void initState() {
     super.initState();
@@ -369,7 +365,7 @@ class _Layout4x4State extends State<Layout4x4> {
     return TextButton(
       onPressed:(){
         setState(() {
-          timeStarter();
+          //timeStarter();
           scoreCounter(boxColor);
           print(score);
           changeBoxColor();
